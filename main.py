@@ -78,26 +78,16 @@ class MyPaintWidget(Widget):
     def on_touch_down(self, touch):
         print(touch.x, touch.y)
         with self.canvas:
-            if touch.is_double_tap:
-                touch.ud['prevy'] = touch.y
-            else:
-                Color(copy(color), 1, 1, mode='hsv')
-                Ellipse(pos=(touch.x - (w / 2),
-                	             touch.y - (w / 2)),
+            Color(copy(color), 1, 1, mode='hsv')
+            Ellipse(pos=(touch.x - (w / 2),
+                                   touch.y - (w / 2)),
             	            size=(w, w))
-                touch.ud['line'] = Line(points=(touch.x, touch.y),
+            touch.ud['line'] = Line(points=(touch.x, touch.y),
                                                    width=w / 2)
 
     def on_touch_move(self, touch):
         global w
-        if not touch.is_double_tap:
-            touch.ud['line'].points += [touch.x, touch.y]
-        else:
-            _w = w + (touch.y - touch.ud['prevy']) * 0.05
-            if _w < 2:
-                return
-            w = _w
-            self.border.draw_border()
+        touch.ud['line'].points += [touch.x, touch.y]
 
 
 class MyPaintApp(App):
