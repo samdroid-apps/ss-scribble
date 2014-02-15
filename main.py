@@ -51,7 +51,7 @@ class MyPaintWidget(Widget):
         diff = g - self.prev_grav
         _w = w + diff * 20
         
-        if not _w < 2:
+        if 100 > _w > 2:
             w = _w
         self.prev_grav = g
         
