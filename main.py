@@ -8,7 +8,7 @@ from kivy.graphics import Color, Ellipse, Line
 from kivy.clock import Clock
 from kivy.vector import Vector
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 Hardware = autoclass('org.renpy.android.Hardware')
 w = 50.0
