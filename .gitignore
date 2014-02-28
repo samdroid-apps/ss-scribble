@@ -1,0 +1,6 @@
+# Buildozer output
+bin/
+.buildozer/
+
+# Gedit backup files
+*~

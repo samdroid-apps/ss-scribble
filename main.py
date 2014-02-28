@@ -8,6 +8,8 @@ from kivy.graphics import Color, Ellipse, Line
 from kivy.clock import Clock
 from kivy.vector import Vector
 
+__version__ = '1.0'
+
 Hardware = autoclass('org.renpy.android.Hardware')
 w = 50.0
 color = random()
@@ -44,9 +46,9 @@ class MyPaintWidget(Widget):
         Clock.schedule_interval(self.update_color, 1 / 20.0)
 
     def update_color(self, *stuff):
-        global color, w
+        global color, w, black
         
-        (_, g, __) = Hardware.accelerometerReading()
+        (_, g, z) = Hardware.accelerometerReading()
         g += 10
         diff = g - self.prev_grav
         _w = w + diff * 20
@@ -54,6 +56,11 @@ class MyPaintWidget(Widget):
         if 100 > _w > 2:
             w = _w
         self.prev_grav = g
+        
+        if z < -18:
+            self.canvas.clear()
+            
+        black = 0 if z < -6 else 1
         
         (x, y, z) = Hardware.magneticFieldSensorReading()
         angle = Vector(x , y).angle((0, 1))
@@ -68,7 +75,8 @@ class MyPaintWidget(Widget):
             
         self.set_color(diff + color)
         self.prev_angle = angle
-        
+
+
 
     def set_color(self, c):
         global color
