@@ -13,6 +13,8 @@ __version__ = '1.0'
 Hardware = autoclass('org.renpy.android.Hardware')
 w = 50.0
 color = random()
+black = 1
+
 
 def rnd():
     return random()
@@ -26,9 +28,9 @@ class MyBorderWidget(Widget):
         width = self.get_root_window().width
         
         with self.canvas:
-            Color(color, 1, 1, mode='hsv')
+            Color(color, black, 1, mode='hsv')
             l = Line(points=(width, 0.0),
-            	     width=w / 4)
+                 width=w / 4)
             l.points += [0.0, 0.0]
             l.points += [0.0, height]
             l.points += [width, height]
@@ -75,8 +77,7 @@ class MyPaintWidget(Widget):
             
         self.set_color(diff + color)
         self.prev_angle = angle
-
-
+       
 
     def set_color(self, c):
         global color
@@ -86,17 +87,16 @@ class MyPaintWidget(Widget):
     def on_touch_down(self, touch):
         print(touch.x, touch.y)
         with self.canvas:
-            Color(copy(color), 1, 1, mode='hsv')
+            Color(copy(color), black, black, mode='hsv')
             Ellipse(pos=(touch.x - (w / 2),
                                    touch.y - (w / 2)),
-            	            size=(w, w))
+                        size=(w, w))
             touch.ud['line'] = Line(points=(touch.x, touch.y),
                                                    width=w / 2)
 
     def on_touch_move(self, touch):
         global w
         touch.ud['line'].points += [touch.x, touch.y]
-
 
 class MyPaintApp(App):
     def build(self):
